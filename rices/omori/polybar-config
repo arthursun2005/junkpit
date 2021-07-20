@@ -1,0 +1,125 @@
+[bar/ass]
+
+bottom = false
+fixed-center = true
+height = 30
+
+pseudo-transparency = true 
+background = #66000000
+
+modules-left = memory pulseaudio filesystem weather
+modules-center = i3
+modules-right = wired-network battery cpu lol 
+
+font-0 = OMORI_GAME2:size=19:weight=bold
+font-1 = FiraCode Nerd Font Mono:size=15:style=bold
+
+[module/cpu]
+type = internal/cpu
+interval = 3
+
+format = <label>
+
+label = CPU %percentage-sum%%
+label-padding = 1
+
+[module/i3]
+type = internal/i3
+
+ws-icon-0 = 1;sunny
+ws-icon-1 = 2;basil
+ws-icon-2 = 3;kel
+ws-icon-3 = 4;aubrey
+ws-icon-4 = 5;hero
+ws-icon-5 = 6;mari
+ws-icon-6 = 7;headspace
+ws-icon-7 = 8;snaley
+ws-icon-8 = 9;mewo
+ws-icon-9 = 0;omori
+
+label-focused = %icon%
+label-focused-foreground = #aaeeff
+label-focused-padding = 2
+label-focused-font = 0
+
+label-unfocused = %icon%
+label-unfocused-padding = 2 
+label-unfocused-font = 0
+
+[module/memory]
+type = internal/memory
+
+interval = 3 
+format = <label>
+label = RAM %gb_used%
+label-padding = 3
+
+
+[module/wired-network]
+type = internal/network
+interface = enp0s3 
+
+format-connected = <label-connected>
+
+format-disconnected = <label-disconnected>
+
+format-packetloss = <animation-packetloss> <label-connected>
+
+label-connected = %{T1}  %{T-}%upspeed:3% %{T1} %{T-}%downspeed:3% 
+
+label-disconnected = n/a
+
+label-connected-padding = 3
+label-disconnected-padding = 3
+
+[module/battery]
+type = internal/battery
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = ADP1
+poll-interval = 5
+
+label-charging = %{T1} %{T-}%percentage%%
+label-discharging = %{T1} %{T-}%percentage%%
+label-full = %{T1} %{T-}%percentage%%
+
+label-charging-padding = 1
+label-discharging-padding = 1
+label-full-padding = 1
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+sink = alsa_output.pci-0000_00_05.0.analog-stereo 
+use-ui-max = true
+interval = 5
+
+label-volume = %{T1} %{T-}%percentage%%
+label-muted = %{T1} %{T-}muted
+
+[module/filesystem]
+type = internal/fs
+
+mount-0 = /
+
+interval = 30
+
+fixed-values = true
+
+label-mounted = %used% (%percentage_used%%)
+label-mounted-padding = 3
+
+[module/weather]
+type = custom/script
+interval = 60
+exec = python3 -O ~/playground/pkgs/weather-script/weather.py
+
+
+[module/lol]
+type = custom/script
+exec = date +"%Y-%m-%d %H:%M:%S"
+interval = 0.1
+label-padding = 2
+

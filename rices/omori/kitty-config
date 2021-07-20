@@ -1,0 +1,22 @@
+font_family Fira Code Retina 
+bold_font        Fira Code Bold
+italic_font      auto
+bold_italic_font auto
+
+font_size 12.0
+cursor_shape block
+
+foreground #f2eeee
+background #331122
+
+color4 #c3c
+color12 #e5e
+
+color2 #fbd2ef
+color10 #a59
+
+color6  #83b
+color14 #95c
+
+window_margin_width 5
+
