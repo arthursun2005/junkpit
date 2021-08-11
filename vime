@@ -1,0 +1,42 @@
+#!/bin/bash
+
+E="gpg -c -a"
+D="gpg -d"
+SUM="sha256sum"
+
+errcho() { >&2 echo $@; }
+
+tmp=`mktemp -u /tmp/$1.XXXXXXXX`
+
+if [ -z "$1" ]; then
+    errcho "filename empty; check stdout"
+    FILE="-"
+
+    touch "$tmp"
+    trap "rm -v $tmp" EXIT
+elif [ -f $1 ]; then
+    FILE="$1"
+
+    eval "$D -o $tmp $FILE" || exit 1
+    trap "rm -v $tmp" EXIT
+else
+    errcho "making new file"
+    FILE="$1"
+
+    touch "$tmp"
+    trap "rm -v $tmp" EXIT
+fi
+
+orig=`$SUM $tmp`
+
+vim $tmp
+
+now=`$SUM $tmp`
+
+if [ "$orig" != "$now" ]; then
+    eval "$E -o $FILE $tmp"
+else
+    errcho $now
+    errcho "bruh... sha256 sums equal ... assuming no changes"
+fi
+
